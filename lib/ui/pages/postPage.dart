@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/auth/reference/user_data_reference.dart';
-import 'package:insta_clone/ui/color.dart';
-import 'package:insta_clone/ui/pages/addPostPage.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+
+import '../styles/color.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({Key? key}) : super(key: key);
@@ -61,7 +60,7 @@ class _PostPageState extends State<PostPage> {
                       padding: EdgeInsets.all(w * 4),
                       itemBuilder: (BuildContext context, int index) {
                         String imageUrl =
-                            snapshot.data!.docs[index]['imageUrl'];
+                        snapshot.data!.docs[index]['imageUrl'];
                         String caption = snapshot.data!.docs[index]['caption'];
                         return postCard(
                           imageUrl: imageUrl,
@@ -89,9 +88,9 @@ class _PostPageState extends State<PostPage> {
   }
 
   Widget postCard(
-          {required String imageUrl,
-          required String caption,
-          required double width}) =>
+      {required String imageUrl,
+        required String caption,
+        required double width}) =>
       Card(
         child: Padding(
           padding: EdgeInsets.all(width * 4),

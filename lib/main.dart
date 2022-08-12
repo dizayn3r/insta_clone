@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'ui/color.dart';
-import 'ui/pages/splashPage.dart';
+import 'package:insta_clone/routes/routers.dart';
+import 'ui/styles/color.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,9 +17,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Insta Clone',
       theme: ThemeData(
+        scaffoldBackgroundColor: onPrimary,
         primarySwatch: crimson,
       ),
-      home: SplashPage(),
+      initialRoute: 'splash',
+      onGenerateRoute: Routers.generateRoute,
     );
   }
 }

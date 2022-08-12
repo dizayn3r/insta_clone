@@ -1,17 +1,13 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/auth/reference/user_data_reference.dart';
 import 'package:insta_clone/model/user_model.dart';
-import 'package:insta_clone/ui/color.dart';
 import 'package:insta_clone/ui/pages/addPostPage.dart';
 import 'package:insta_clone/ui/pages/postPage.dart';
 import 'package:insta_clone/ui/pages/splashPage.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-import 'settingsPage.dart';
+import '../styles/color.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -77,50 +73,50 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget navBar(BuildContext context, double widthBlock) => Container(
-        color: onPrimary,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    pageIndex = 0;
-                  });
-                },
-                child: Container(
-                  height: widthBlock * 15,
-                  color: pageIndex == 0 ? primary : onPrimary,
-                  child: Icon(
-                    Icons.rss_feed_rounded,
-                    color: pageIndex == 0
-                        ? onPrimary
-                        : textColor.withOpacity(0.25),
-                    size: pageIndex == 0 ? widthBlock * 8 : widthBlock * 7,
-                  ),
-                ),
+    color: onPrimary,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                pageIndex = 0;
+              });
+            },
+            child: Container(
+              height: widthBlock * 15,
+              color: pageIndex == 0 ? primary : onPrimary,
+              child: Icon(
+                Icons.rss_feed_rounded,
+                color: pageIndex == 0
+                    ? onPrimary
+                    : textColor.withOpacity(0.25),
+                size: pageIndex == 0 ? widthBlock * 8 : widthBlock * 7,
               ),
             ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    pageIndex = 1;
-                  });
-                },
-                child: Container(
-                    height: widthBlock * 15,
-                    color: pageIndex == 1 ? primary : onPrimary,
-                    child: Icon(
-                      Icons.add_rounded,
-                      color: pageIndex == 1
-                          ? onPrimary
-                          : textColor.withOpacity(0.25),
-                      size: pageIndex == 1 ? widthBlock * 8 : widthBlock * 7,
-                    )),
-              ),
-            ),
-          ],
+          ),
         ),
-      );
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                pageIndex = 1;
+              });
+            },
+            child: Container(
+                height: widthBlock * 15,
+                color: pageIndex == 1 ? primary : onPrimary,
+                child: Icon(
+                  Icons.add_rounded,
+                  color: pageIndex == 1
+                      ? onPrimary
+                      : textColor.withOpacity(0.25),
+                  size: pageIndex == 1 ? widthBlock * 8 : widthBlock * 7,
+                )),
+          ),
+        ),
+      ],
+    ),
+  );
 }

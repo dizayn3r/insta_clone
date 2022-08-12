@@ -1,11 +1,12 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:insta_clone/auth/reference/user_data_reference.dart';
-import 'package:insta_clone/ui/color.dart';
+import 'package:insta_clone/model/post_model.dart';
+import 'package:insta_clone/model/user_model.dart';
+import 'package:insta_clone/ui/styles/color.dart';
 import 'package:insta_clone/ui/pages/homePage.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -19,8 +20,9 @@ class AddPost extends StatefulWidget {
 
 class _AddPostState extends State<AddPost> {
   File? _image;
+  PostModel postModel = PostModel();
+  UserModel userModel = UserModel();
   final imagePicker = ImagePicker();
-  String? imageUrl;
   final TextEditingController _captionController = TextEditingController();
 
   showSnackBar(String snackText, Duration d) {
@@ -59,21 +61,21 @@ class _AddPostState extends State<AddPost> {
       required String caption,
       required double w,
       required double h}) async {
+    DateTime createdAt = DateTime.now();
     final imgId = DateTime.now().millisecondsSinceEpoch.toString();
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     Reference reference = FirebaseStorage.instance
         .ref()
         .child("${widget.userId}/posts")
         .child("post_$imgId");
 
     await reference.putFile(image);
-    imageUrl = await reference.getDownloadURL();
+    postModel.imageUrl = await reference.getDownloadURL();
 
     await UserDataReference()
         .userData()
         .doc(widget.userId)
         .collection("posts")
-        .add({"imageUrl": imageUrl, "caption": caption}).whenComplete(
+        .add({"imageUrl": postModel.imageUrl, "caption": postModel.caption,"createdAt": createdAt}).whenComplete(
       () => showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -298,7 +300,6 @@ class _AddPostState extends State<AddPost> {
                         ),
                         SizedBox(height: w * 2),
                         Container(
-
                           child: _image == null
                               ? const Center(
                                   child: Text("No image selected"),
@@ -330,6 +331,7 @@ class _AddPostState extends State<AddPost> {
                       ),
                       onSubmitted: (value) {
                         _captionController.text = value;
+                        postModel.caption = _captionController.text;
                       },
                     ),
                   ),
