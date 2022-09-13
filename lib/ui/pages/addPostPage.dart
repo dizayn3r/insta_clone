@@ -43,9 +43,7 @@ class _AddPostState extends State<AddPost> {
   }
 
   getFromCamera(context) async {
-    final picker = await imagePicker.pickImage(
-      source: ImageSource.camera,
-    );
+    final picker = await imagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       if (picker != null) {
         _image = File(picker.path);
